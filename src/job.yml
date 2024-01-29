@@ -1,15 +1,19 @@
-training_data$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: model
 command: >-
   python train.py
-  -- training_data ${{inputs.training_data}}
-  -- reg_rate ${{inputs.reg_rate}}
+  --training_data ${{inputs.training_data}}
+  --reg_rate ${{inputs.reg_rate}}
 inputs:
   training_data: 
     type: uri_folder 
-    path: https://github.com/TozCGI/mslearn-ops/tree/main/experimentation/data
+    path: azureml://subscriptions/269a6199-fd96-4ce7-8998-b0528a6b3f4f/resourcegroups/python-working-group-rg/workspaces/ml-ops-demo/datastores/workspaceblobstore/paths/LocalUpload/a5b05a17f213e8e12e54948a8e3d1dfa/data/
+    mode: ro_mount
   reg_rate: 0.01
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 compute: azureml:training-compute-v2
 experiment_name: Diabetes
 description: Trying to learn CLIv2 
+
+# Terminal command
+# az ml job create --file ./src/job.yml

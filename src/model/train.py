@@ -41,9 +41,9 @@ def split_data(df):
 
     # select the first 60% of the dataset for the training
 
-    rows_to_select = int(len(dataframe) * (60 / 100))
+    rows_to_select = int(len(df) * (60 / 100))
     train_data = df.iloc[:rows_to_select, :]
-    test_data = df.iloc[row_to_select:, :]
+    test_data = df.iloc[rows_to_select:, :]
 
     X_train = train_data.drop(columns = ['Diabetic'])
     X_test = test_data.drop(columns = ['Diabetic'])
