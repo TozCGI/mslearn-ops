@@ -36,17 +36,17 @@ def get_csvs_df(path):
 
 # TO DO: add function to split data
 def split_data(df):
-   
     shuffled_df = df.sample(frac = 1, random_state = 42)
 
     # select the first 60% of the dataset for the training
-
     rows_to_select = int(len(df) * (60 / 100))
-    train_data = df.iloc[:rows_to_select, :]
-    test_data = df.iloc[rows_to_select:, :]
+    train_data = shuffled_df.iloc[:rows_to_select, :]
+    test_data = shuffled_df.iloc[rows_to_select:, :]
+
 
     X_train = train_data.drop(columns = ['Diabetic'])
     X_test = test_data.drop(columns = ['Diabetic'])
+
     
     y_train = train_data['Diabetic']
     y_test = test_data['Diabetic']
