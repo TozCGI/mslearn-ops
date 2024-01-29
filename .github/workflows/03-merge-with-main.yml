@@ -20,5 +20,5 @@ jobs:
     - name: Run job
       run: az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
     - name: Deploy model
-      run: az ml model create -f ./src/Register_Model.yml
+      run: az ml model create -f ./src/Register_Model.yml --workspace-name ml-ops-demo
       
