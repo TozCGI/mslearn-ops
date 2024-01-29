@@ -11,14 +11,6 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@main
-    - name: Install az ml extension
-      run: az extension add -n ml -y
-    - name: Azure login
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Run job
-      run: az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
     - name: Use Python version 3.8
       uses: actions/setup-python@v3
       with:
@@ -29,6 +21,15 @@ jobs:
     - name: Run linting tests
       run: | 
         flake8 src/model/
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Run job
+      run: az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
+
 
 
 # :)
