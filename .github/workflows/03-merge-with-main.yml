@@ -21,5 +21,5 @@ jobs:
       id: run_job
       run: az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
     - name: Deploy model
-      run: az ml model create --name MLmodel --path azureml://jobs/$RUN_ID/outputs/artifacts/$MODEL_PATH
+      run: az ml model create --name MLmodel --path azureml://jobs/$RUN_ID/outputs/artifacts/$MODEL_PATH --resource-group python-working-group-rg --workspace-name ml-ops-demo
       
