@@ -21,6 +21,8 @@ jobs:
       id: run_job
       run: |
         # Run your az ml job create command and capture the output in a variable
+
+        az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
         output_json=$(az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo)
 
         # Extract the desired value from the JSON using jq
