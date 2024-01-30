@@ -20,9 +20,11 @@ jobs:
     - name: Run job
       id: run_job
       run: 
-        az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
+        # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
+        output_json=$(az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo)
+        echo "Output [$output_json]"
         echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
-    - name: Deploy model
-      run: |
-        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --resource-group python-working-group-rg --workspace-name ml-ops-demo
-        echo "Path value from the previous step: ${{ steps.run_job.outputs.path_variable }}"
+    # - name: Deploy model
+    #   run: |
+    #     az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --resource-group python-working-group-rg --workspace-name ml-ops-demo
+    #     echo "Path value from the previous step: ${{ steps.run_job.outputs.path_variable }}"
