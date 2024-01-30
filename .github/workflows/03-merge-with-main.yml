@@ -34,7 +34,7 @@ jobs:
         
     - name: Deploy model
       run: 
-        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}}
-        
+        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --workspace-name ml-ops-demo
+
 # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
 # echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
