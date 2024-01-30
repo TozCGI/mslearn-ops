@@ -19,12 +19,20 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Run job
       id: run_job
-      run: 
-        # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
+      run: |
+        # Run your az ml job create command and capture the output in a variable
         output_json=$(az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo)
-        echo "Output [$output_json]"
-        echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
-    # - name: Deploy model
-    #   run: |
-    #     az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --resource-group python-working-group-rg --workspace-name ml-ops-demo
-    #     echo "Path value from the previous step: ${{ steps.run_job.outputs.path_variable }}"
+
+        # Extract the desired value from the JSON using jq
+        path_value=$(echo "$output_json" | jq -r '.outputs.default.path')
+
+        # Set the output variable for later use
+        echo "::set-output name=path_variable::${path_value}"
+        echo "Output [$path_value]"
+        
+    - name: Deploy model
+      run: 
+        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --resource-group python-working-group-rg --workspace-name ml-ops-demo
+
+# az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
+# echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
