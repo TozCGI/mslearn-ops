@@ -29,26 +29,26 @@ jobs:
         # Set the output variable for later use
 
         # Poll for Azure Machine Learning run completion
-        while true; do
-          # Check the status of the run
-          status=$(az ml job show --name "$path_value" --query "{Name:name,Jobstatus:status}"  --output table --resource-group python-working-group-rg --workspace-name ml-ops-demo | jq -r '.status')
-          
-          echo "AML Run Status: $status"
-
-          # Break the loop if the run is completed
-          if [ "$status" == "Completed" ]; then
-            break
-          fi
-
-          sleep 5  # Add a delay between checks
-        done
-
-        echo "::set-output name=path_variable::${path_value}"
-        echo "Output [$path_value]"
         
-    - name: Deploy model
-      run: 
-        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --workspace-name ml-ops-demo
+          # Check the status of the run
+        az ml job show --name "$path_value" --query "{Name:name,Jobstatus:status}"  --output table --resource-group python-working-group-rg --workspace-name ml-ops-demo
+          
+#           echo "AML Run Status: $status"
 
-# az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
-# echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
+#           # Break the loop if the run is completed
+#           if [ "$status" == "Completed" ]; then
+#             break
+#           fi
+
+#           sleep 5  # Add a delay between checks
+#         done
+
+#         echo "::set-output name=path_variable::${path_value}"
+#         echo "Output [$path_value]"
+        
+#     - name: Deploy model
+#       run: 
+#         az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --workspace-name ml-ops-demo
+
+# # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
+# # echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
