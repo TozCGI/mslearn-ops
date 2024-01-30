@@ -31,7 +31,7 @@ jobs:
         # Poll for Azure Machine Learning run completion
         while true; do
           # Check the status of the run
-          status=$(az ml run show --run-id "$path_value" --output json | jq -r '.status')
+          status=$(az ml job show --run-id "$path_value" --output json | jq -r '.status')
           echo "AML Run Status: $status"
 
           # Break the loop if the run is completed
