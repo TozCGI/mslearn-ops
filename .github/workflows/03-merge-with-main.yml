@@ -29,7 +29,7 @@ jobs:
         path_value=$(echo "$output_json" | jq -r '.id')
 
         # Set the output variable for later use
-        echo "::set-output name=path_variable::${path_value}"
+        echo "{path_variable}={path_value}" >> $GITHUB_OUTPUT
         echo "Output [$path_value]"
         
     - name: Deploy model
