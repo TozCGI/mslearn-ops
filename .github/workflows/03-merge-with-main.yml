@@ -1,9 +1,7 @@
-name: Automatic Trigger
+name: Run Job
 
 on:
-    push:
-      branches:
-        - main
+  workflow_dispatch:
 
 jobs:
   train:
@@ -20,19 +18,10 @@ jobs:
     - name: Run job
       id: run_job
       run: |
-        # Run your az ml job create command and capture the output in a variable
-        output_json=$(az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo)
+        # Run az ml job create command and capture the output in a variable
+        az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo
 
-        # Extract the desired value from the JSON using jq
-        path_value=$(echo "$output_json" | jq -r '.id')
-
-        # Set the output variable for later use
-        echo "::set-output name=path_variable::${path_value}"
-        echo "Output [$path_value]"
-        
-    - name: Deploy model
-      run: 
-        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --workspace-name ml-ops-demo
+# save the outputs of the created job to github environment variables
 
 # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
 # echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
