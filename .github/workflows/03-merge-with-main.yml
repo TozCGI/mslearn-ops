@@ -26,7 +26,7 @@ jobs:
         output_json=$(az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo)
 
         # Extract the desired value from the JSON using jq
-        path_value=$(echo "$output_json" | jq -r '.outputs.default.id')
+        path_value=$(echo "$output_json" | jq -r '.id')
 
         # Set the output variable for later use
         echo "::set-output name=path_variable::${path_value}"
