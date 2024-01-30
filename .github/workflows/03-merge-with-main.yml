@@ -29,12 +29,12 @@ jobs:
         path_value=$(echo "$output_json" | jq -r '.id')
 
         # Set the output variable for later use
-        echo "{path_variable}={path_value}" >> $GITHUB_OUTPUT
+        echo "::set-output name=path_variable::${path_value}"
         echo "Output [$path_value]"
         
     - name: Deploy model
       run: 
-        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}} --resource-group python-working-group-rg --workspace-name ml-ops-demo
-
+        az ml model create --name MLmodel --path ${{steps.run_job.outputs.path_variable}}
+        
 # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
 # echo "::set-output name=path_variable::${steps.run_job.outputs.path}"
