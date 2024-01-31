@@ -24,9 +24,14 @@ jobs:
         # Extract the desired value from the JSON using jq
         path_value=$(echo "$output_json" | jq -r '.id')
 
-        # Set the output variable for later use
-        echo "path_value=$path_value" >> $GITHUB_ENV
-        echo "Output [$path_value]"
+        # Create a file containing the path_value
+        echo "$path_value" > path_value.txt
+
+    - name: Upload path_value as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: path_value_artifact
+        path: path_value.txt
 # save the outputs of the created job to github environment variables
 
 # az ml job create --file ./src/job.yml --resource-group python-working-group-rg --workspace-name ml-ops-demo 
