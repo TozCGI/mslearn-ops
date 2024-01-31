@@ -25,7 +25,7 @@ jobs:
         path_value=$(echo "$output_json" | jq -r '.id')
 
         # Set the output variable for later use
-        echo "::set-output name=path_variable::${path_value}"
+        echo "path_value=$path_value" >> $GITHUB_ENV
         echo "Output [$path_value]"
 # save the outputs of the created job to github environment variables
 
